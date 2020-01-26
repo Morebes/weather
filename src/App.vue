@@ -1,28 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input type="text" v-model="city" />
+    <button @click="weatherFetch()">find</button>
+    <p>{{ weatherResponse }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      weatherResponse: null,
+      city: 'London'
+    }
+  },
+  async mounted() {
+    await this.weatherFetch()
+  },
+  methods: {
+    async weatherFetch() {
+      const key = process.env.VUE_APP_API_KEY
+
+      this.weatherResponse = await fetch(
+        `http://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${key}`
+      ).then(r => r.json())
+    }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+@import '~materialize-css/dist/css/materialize.min.css'
 </style>
