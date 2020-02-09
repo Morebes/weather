@@ -2,8 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 
+import AppLoader from '@/components/AppLoader'
+
 import 'materialize-css/dist/js/materialize.min'
 
+
+Vue.component('AppLoader', AppLoader)
 Vue.config.productionTip = false
 
 new Vue({
